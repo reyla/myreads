@@ -3,8 +3,11 @@ import { Link } from 'react-router-dom'
 import BooksApp from './App';
 
 class Shelves extends React.Component {
+    
+
+    
     render() {
-        const { books } = this.props
+        const { books, onUpdateShelf } = this.props
         console.log(books)
         return (          
             <div className="list-books">
@@ -22,7 +25,7 @@ class Shelves extends React.Component {
                                 <li key={book.id}>
                                     <div className="book">
                                         <div className="book-top">
-                                            <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: 'url(" + {book.imageLinks.thumbnail} + ")' }}></div>
+                                            <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.thumbnail})` }}></div>
                                             <div className="book-shelf-changer">
                                             <select>
                                                 <option value="move" disabled>Move to...</option>
