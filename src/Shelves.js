@@ -10,12 +10,10 @@ class Shelves extends React.Component {
          } = this.props
 
         return (          
-        <div>
-            
+        <div>  
             <div className="bookshelf">
                 <h2 className="bookshelf-title">{shelfTitle}</h2>
                 <div className="bookshelf-books">
-                    
                     <ol className="books-grid">
                     {currentShelf.map((book) => (                               
                         <li key={book.id}>
@@ -39,14 +37,12 @@ class Shelves extends React.Component {
                          ))} 
                     </ol>
                 </div>
-            </div>
-                   
+            </div>     
             <div className="open-search">
                 <Link to="/search">Add a book</Link>
             </div>
         </div>
         )
-
     }
 }
 
