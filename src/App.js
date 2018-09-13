@@ -4,6 +4,7 @@ import Shelves from './Shelves'
 import Search from './Search'
 import * as BooksAPI from './BooksAPI'
 import './App.css'
+import sortBy from 'sort-by';
 
 class BooksApp extends React.Component {
   state = {
@@ -16,12 +17,15 @@ class BooksApp extends React.Component {
     })
   }
 
-  updateShelf(book, event) {
-    BooksAPI.update(book, event.target.value).then(
-      BooksAPI.getAll().then((books) => {
-        this.setState({ books })
-      })
-    )
+  updateShelf(book, value) {
+    const shelf = value.target.value
+    BooksAPI.update(book, shelf).then(() => {
+      book.shelf = shelf
+      this.setState(state => ({
+        books: state.books.concat([book]).sort(sortBy('title'))
+      }))
+    })
+    
   }  
 
   render() {
@@ -29,7 +33,7 @@ class BooksApp extends React.Component {
       <div className="app">
         <Route path="/search" render={() => (
           <Search
-            onUpdateShelf={this.updateShelf}
+            onUpdateShelf={this.updateShelf.bind(this)}
           />
         )}/>
         <Route exact path="/" render={() => (
@@ -42,15 +46,15 @@ class BooksApp extends React.Component {
                 <Shelves 
                   shelfTitle='Currently Reading' 
                   currentShelf={this.state.books.filter((book) => {return book.shelf === 'currentlyReading'})} 
-                  onUpdateShelf={this.updateShelf} />
+                  onUpdateShelf={this.updateShelf.bind(this)} />
                 <Shelves 
                   shelfTitle='Read' 
                   currentShelf={this.state.books.filter((book) => {return book.shelf === 'read'})} 
-                  onUpdateShelf={this.updateShelf} />
+                  onUpdateShelf={this.updateShelf.bind(this)} />
                 <Shelves 
                   shelfTitle='Want To Read' 
                   currentShelf={this.state.books.filter((book) => {return book.shelf === 'wantToRead'})} 
-                  onUpdateShelf={this.updateShelf} />
+                  onUpdateShelf={this.updateShelf.bind(this)} />
                 </div>
             </div>
           </div>
