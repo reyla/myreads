@@ -40,7 +40,6 @@ class BooksApp extends React.Component {
         BooksAPI.getAll().then((books) => {
           // refill the local books, should be zero showing
           this.setState({ books })
-          console.log(this.state.books)
         })
       })
     })  
@@ -55,12 +54,12 @@ class BooksApp extends React.Component {
             onUpdateShelf={this.updateShelf.bind(this)}
           />
         )}/>
-        <button onClick={this.resetAllShelves.bind(this)}>Reset Shelves</button>
         <Route exact path="/" render={() => (
           <div className="list-books">
             <div className="list-books-title">
                 <h1>MyReads</h1>
             </div>
+            <button onClick={this.resetAllShelves.bind(this)}>Reset Shelves</button>
             <div className="list-books-content">
                 <div>
                 <Shelves 
