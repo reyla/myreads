@@ -2,14 +2,14 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 class Shelves extends React.Component {
- 
+
     render() {
         const { shelfTitle,
                 currentShelf,
-                onUpdateShelf
-         } = this.props
+                onUpdateShelf,
+         } = this.props    
 
-        return (          
+        return (              
         <div>  
             <div className="bookshelf">
                 <h2 className="bookshelf-title">{shelfTitle}</h2>
@@ -19,7 +19,11 @@ class Shelves extends React.Component {
                         <li key={book.id}>
                             <div className="book">
                                 <div className="book-top">
-                                    <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.thumbnail})` }}></div>
+                                    <div className="book-cover" style={{ 
+                                        width: 128, 
+                                        height: 193,
+                                        backgroundImage: book.imageLinks.thumbnail != undefined ? `url(${book.imageLinks.thumbnail})` : `url(https://dummyimage.com/128x193/292929/e3e3e3&text=No)`}}>
+                                    </div>
                                     <div className="book-shelf-changer">
                                     <select value={(book.shelf) ? book.shelf : 'none'} onChange={(value) => {onUpdateShelf(book, value); console.log(currentShelf)}}>
                                         <option value="move" disabled>Move to...</option>

@@ -24,6 +24,8 @@ class BooksApp extends React.Component {
       this.setState(state => ({
         books: state.books.concat([ book ]).sort(sortBy('title'))
       }))
+      console.log(this.state)
+      console.log("Added a new book \n")
     })
   }
    
@@ -46,7 +48,6 @@ class BooksApp extends React.Component {
   }      
 
   render() {
-
     return (
       <div className="app">
         <Route path="/search" render={({ history }) => (
