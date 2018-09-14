@@ -4,7 +4,7 @@ import Shelves from './Shelves'
 import Search from './Search'
 import * as BooksAPI from './BooksAPI'
 import './App.css'
-import sortBy from 'sort-by';
+import sortBy from 'sort-by'
 
 class BooksApp extends React.Component {
   state = {
@@ -18,17 +18,36 @@ class BooksApp extends React.Component {
   }
 
   updateShelf(book, value) {
-    const shelf = value.target.value
+    let shelf = value.target.value
     BooksAPI.update(book, shelf).then(() => {
       book.shelf = shelf
       this.setState(state => ({
-        books: state.books.concat([book]).sort(sortBy('title'))
+        books: state.books.concat([ book ]).sort(sortBy('title'))
       }))
     })
-    
-  }  
+  }
+   
+  resetAllShelves() {
+    // we want to reset shelf to 'none' in local books and api books
+    // first map over each local copy of the book
+    this.state.books.map((book) => {
+      // update each book through api to have no shelf
+      BooksAPI.update(book, 'none').then(() => {
+        // reset local copy of books to empty
+        this.setState({ books: [] })
+      }).then(() => {
+        // pull all books from api
+        BooksAPI.getAll().then((books) => {
+          // refill the local books, should be zero showing
+          this.setState({ books })
+          console.log(this.state.books)
+        })
+      })
+    })  
+  }      
 
   render() {
+
     return (
       <div className="app">
         <Route path="/search" render={() => (
@@ -36,6 +55,7 @@ class BooksApp extends React.Component {
             onUpdateShelf={this.updateShelf.bind(this)}
           />
         )}/>
+        <button onClick={this.resetAllShelves.bind(this)}>Reset Shelves</button>
         <Route exact path="/" render={() => (
           <div className="list-books">
             <div className="list-books-title">
