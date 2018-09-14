@@ -19,16 +19,33 @@ class BooksApp extends React.Component {
 
   updateShelf(book, value) {
     let shelf = value.target.value
-    BooksAPI.update(book, shelf).then(() => {
-      book.shelf = shelf
-      this.setState(state => ({
-        books: state.books.concat([ book ]).sort(sortBy('title'))
-      }))
-      console.log(this.state)
-      console.log("Added a new book \n")
+    // update the book shelf in the api
+    BooksAPI.update(book, shelf).then((book) => {
+      // check if book is already in your collection before adding it
+      this.checkBook ? console.log("Duplicate book") : this.addBook
+      // update the book shelf in state array
+      BooksAPI.getAll().then((books) => {
+        this.setState({ books })
+      })
+      console.log("Bookshelf was updated")
     })
   }
-   
+  
+  // check if book is currently in your collection
+  checkBook(book) {
+    let books = this.state
+    return books.find(book)
+  }
+
+  // add book to collection and update state
+  addBook(book) {
+    let newListOfBooks = this.state.slice()
+    newListOfBooks.push(book).sort(sortBy('title'))   
+    this.setState({ books:newListOfBooks })
+    console.log("A book was added")
+    console.log(this.state)
+  }
+
   resetAllShelves() {
     // we want to reset shelf to 'none' in local books and api books
     // first map over each local copy of the book
