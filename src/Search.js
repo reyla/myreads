@@ -19,7 +19,10 @@ class Search extends React.Component {
                     results.map((result) => {
                         // check if all books in results have an image
                         if (result.imageLinks === undefined) {
-                        result.imageLinks = `url(https://dummyimage.com/128x193/292929/e3e3e3&text=No)`;
+                            result.imageLinks = `url(https://dummyimage.com/128x193/292929/e3e3e3&text=No)`
+                        }
+                        if (result.shelf === undefined) {
+                            result.shelf = 'none'
                         }
                     })
                     this.setState({ queryResults: results })
