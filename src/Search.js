@@ -1,14 +1,14 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import * as BooksAPI from './BooksAPI'
-import escapeRegExp from 'escape-string-regexp'
+// import escapeRegExp from 'escape-string-regexp'
 import sortBy from 'sort-by'
 
 class Search extends React.Component {
     state = {
         queryResults: []
-    }
-    
+    }    
+
     search(query) {
         if (query.target.value !== '') {
             BooksAPI.search(query.target.value).then((results) => {
@@ -24,6 +24,7 @@ class Search extends React.Component {
                         if (result.shelf === undefined) {
                             result.shelf = 'none'
                         }
+                    results.sort(sortBy('title'))
                     })
                     this.setState({ queryResults: results })
                 }    
