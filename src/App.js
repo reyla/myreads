@@ -13,6 +13,7 @@ class BooksApp extends React.Component {
 
   componentDidMount() {
     BooksAPI.getAll().then((books) => {
+      books.sort(sortBy('title'))
       this.setState({ books })
     })
   }
