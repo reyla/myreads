@@ -11,6 +11,7 @@ class BooksApp extends React.Component {
     books: [],
   }
 
+  /* set initial state of the bookshelves */
   componentDidMount() {
     BooksAPI.getAll().then((books) => {
       books.sort(sortBy('title'))
@@ -18,35 +19,18 @@ class BooksApp extends React.Component {
     })
   }
 
+  /* update book shelf when user selects different shelf */
   updateShelf(book, value) {
     let shelf = value.target.value
     // update the book shelf in the api
     BooksAPI.update(book, shelf).then((book) => {
+      // reset all the shelves
       BooksAPI.getAll().then((books) => {
         books.sort(sortBy('title'))
         this.setState({ books })
       })
-      console.log("Bookshelf was updated")
     })
   }
-  /* 
-  resetAllShelves() {
-    // we want to reset shelf to 'none' in local books and api books
-    // first map over each local copy of the book
-    this.state.books.map((book) => {
-      // update each book through api to have no shelf
-      BooksAPI.update(book, 'none').then(() => {
-        // reset local copy of books to empty
-        this.setState({ books: [] })
-      }).then(() => {
-        // pull all books from api
-        BooksAPI.getAll().then((books) => {
-          // refill the local books, should be zero showing
-          this.setState({ books })
-        })
-      })
-    })  
-  } <button onClick={this.resetAllShelves.bind(this)}>Reset Shelves</button> */      
 
   render() {
     return (
@@ -55,6 +39,7 @@ class BooksApp extends React.Component {
           <Search
             onUpdateShelf={(book, shelf) => {
               this.updateShelf(book,shelf)
+              // force user back to bookshelves view
               history.push('/')
             }}
           />
@@ -81,7 +66,7 @@ class BooksApp extends React.Component {
                 </div>
             </div>
           </div>
-          )}/>
+        )}/>
       </div>
     )
   }
