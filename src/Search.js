@@ -60,6 +60,7 @@ class Search extends React.Component {
                     </div>
                 </div>
                 <div className="search-books-results">
+                    <h3 class="search-results">Your search has {queryResults.length} results</h3>
                     <ol className="books-grid">
                     {queryResults.map((book) => (
                         <li key={book.id}>
