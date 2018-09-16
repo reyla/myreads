@@ -22,6 +22,7 @@ class Shelves extends React.Component {
                                     <div className="book-cover" style={{ 
                                         width: 128, 
                                         height: 193,
+                                        // check if there is a thumbnail image, otherwise use default
                                         backgroundImage: book.imageLinks.thumbnail !== undefined ? `url(${book.imageLinks.thumbnail})` : `url(https://dummyimage.com/128x193/ddd/000&text=No+Image)`}}>
                                     </div>
                                     <div className="book-shelf-changer">
