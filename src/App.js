@@ -23,6 +23,7 @@ class BooksApp extends React.Component {
     // update the book shelf in the api
     BooksAPI.update(book, shelf).then((book) => {
       BooksAPI.getAll().then((books) => {
+        books.sort(sortBy('title'))
         this.setState({ books })
       })
       console.log("Bookshelf was updated")
