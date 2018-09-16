@@ -6,7 +6,7 @@ This app allows users to track books they are reading, have already read, and wa
 
 You can clone this project using https://github.com/reyla/myreads.git
 
-In your directory, install all project dependencies with `npm install`.
+In your project directory, install all project dependencies with `npm install`.
 
 Start the development server with `npm start`. It should automatically navigate your web browser to http://localhost:3000
 
@@ -17,7 +17,7 @@ The backend API uses a fixed set of cached search results and is limited to a pa
 
 Font provided by Google Fonts https://fonts.googleapis.com/css?family=Roboto
 
-All npm dependencies are listed in [package.json]. 
+All npm dependencies are listed in [package.json](package.json). 
 
 ## Sources
 
