@@ -17,16 +17,18 @@ class Search extends React.Component {
                     this.setState({ queryResults: [] })
                 } else {
                     results.map((result) => {
-                        // check if all books in results have an image
+                        // set default image for any missing images
                         if (result.imageLinks === undefined) {
-                            result.imageLinks = `url(https://dummyimage.com/128x193/292929/e3e3e3&text=No)`
+                            result.imageLinks = `url(https://dummyimage.com/128x193/ddd/000&text=No+Image)`
                         }
+                        // set default shelf to none
                         if (result.shelf === undefined) {
                             result.shelf = 'none'
                         }
                     results.sort(sortBy('title'))
                     })
                     this.setState({ queryResults: results })
+                    console.log(this.state)
                 }    
             })
         } else if (query.target.value === '') {
