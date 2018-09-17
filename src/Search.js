@@ -19,17 +19,13 @@ class Search extends React.Component {
                     let currentBooks = this.props.books;
                     // look for the book in that books array based on ID and return the index
                     let bookIndex = currentBooks.findIndex(oldBook => oldBook.id === result.id);
-                    // if the book already exists in your array
+                    // if the book already exists in your array (i.e. index is 0,1,2 etc)
                     if (bookIndex !== -1) {
                         // set the shelf correctly
                         result.shelf = currentBooks[bookIndex].shelf
                     } else {
                         // set default shelf to none
                         result.shelf = 'none'
-                    }
-                    // set default image for any missing images
-                    if (result.imageLinks === undefined) {
-                        result.imageLinks = `url(https://dummyimage.com/128x193/ddd/000&text=No+Image)`
                     }
                 results.sort(sortBy('title'))
                 });
@@ -74,7 +70,11 @@ class Search extends React.Component {
                         <li key={book.id}>
                         <div className="book">
                             <div className="book-top">
-                                <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.thumbnail})` }}></div>
+                                <div className="book-cover" style={{ width: 128, 
+                                                                     height: 193, 
+                                                                     // check if there are images, otherwise set default
+                                                                     backgroundImage: book.imageLinks !== undefined ? `url(${book.imageLinks.thumbnail})` : `url('https://dummyimage.com/128x193/ddd/000&text=No+Image')`}}> 
+                                </div>
                                 <div className="book-shelf-changer">
                                 <select value={book.shelf} onChange={(event) => {onUpdateShelf(book, event)}}>
                                     <option value="move" disabled>Move to...</option>
