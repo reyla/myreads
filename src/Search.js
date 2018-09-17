@@ -12,30 +12,33 @@ class Search extends React.Component {
         // check if search query has a value
         if (query.target.value !== '') {
             BooksAPI.search(query.target.value).then((results) => {
-                // go through search results one book at a time
-                results.map((result) => {
-                    // we're passing in the current books already on your shelves
-                    // it is an array from BooksApp state (see App.js)
-                    let currentBooks = this.props.books;
-                    // look for the book in that books array based on ID and return the index
-                    let bookIndex = currentBooks.findIndex(oldBook => oldBook.id === result.id);
-                    // if the book already exists in your array (i.e. index is 0,1,2 etc)
-                    if (bookIndex !== -1) {
-                        // set the shelf correctly
-                        result.shelf = currentBooks[bookIndex].shelf
-                    } else {
-                        // set default shelf to none
-                        result.shelf = 'none'
-                    }
-                results.sort(sortBy('title'))
-                });
-                // fill array with results from search
-                this.setState({ queryResults: results }) 
-            }).catch(
-                // if there are no results then display nothing
-                this.setState({ queryResults: [] }))
+                if (results.error) {
+                    // if there are no results then display nothing
+                    this.setState({ queryResults: [] })
+                } else {
+                    // go through search results one book at a time
+                    results.map((result) => {
+                        // we're passing in the current books already on your shelves
+                        // it is an array from BooksApp state (see App.js)
+                        let currentBooks = this.props.books;
+                        // look for the book in that books array based on ID and return the index
+                        let bookIndex = currentBooks.findIndex(oldBook => oldBook.id === result.id);
+                        // if the book already exists in your array (i.e. index is 0,1,2 etc)
+                        if (bookIndex !== -1) {
+                            // set the shelf correctly
+                            result.shelf = currentBooks[bookIndex].shelf
+                        } else {
+                            // set default shelf to none
+                            result.shelf = 'none'
+                        }
+                    })
+                    results.sort(sortBy('title'));
+                    // fill array with results from search
+                    this.setState({ queryResults: results }) 
+                }
+            })
         } else if (query.target.value === '') {
-          this.setState({ queryResults: [] })
+        this.setState({ queryResults: [] })
         }
     }
 
