@@ -6,38 +6,46 @@ import sortBy from 'sort-by'
 class Search extends React.Component {
     state = {
         queryResults: []
-    }    
+    }
 
     search(query) {
         // check if search query has a value
         if (query.target.value !== '') {
             BooksAPI.search(query.target.value).then((results) => {
-                // if there are no results then display nothing
-                if (results.error) {
-                    this.setState({ queryResults: [] })
-                } else {
-                    results.map((result) => {
-                        // set default image for any missing images
-                        if (result.imageLinks === undefined) {
-                            result.imageLinks = `url(https://dummyimage.com/128x193/ddd/000&text=No+Image)`
-                        }
+                // go through search results one book at a time
+                results.map((result) => {
+                    // we're passing in the current books already on your shelves
+                    // it is an array from BooksApp state (see App.js)
+                    let currentBooks = this.props.books;
+                    // look for the book in that books array based on ID and return the index
+                    let bookIndex = currentBooks.findIndex(oldBook => oldBook.id === result.id);
+                    // if the book already exists in your array
+                    if (bookIndex !== -1) {
+                        // set the shelf correctly
+                        result.shelf = currentBooks[bookIndex].shelf
+                    } else {
                         // set default shelf to none
-                        if (result.shelf === undefined) {
-                            result.shelf = 'none'
-                        }
-                    results.sort(sortBy('title'))
-                    })
-                    // fill array with results from search
-                    this.setState({ queryResults: results })
-                }    
-            })
+                        result.shelf = 'none'
+                    }
+                    // set default image for any missing images
+                    if (result.imageLinks === undefined) {
+                        result.imageLinks = `url(https://dummyimage.com/128x193/ddd/000&text=No+Image)`
+                    }
+                results.sort(sortBy('title'))
+                });
+                // fill array with results from search
+                this.setState({ queryResults: results }) 
+            }).catch(
+                // if there are no results then display nothing
+                this.setState({ queryResults: [] }))
         } else if (query.target.value === '') {
           this.setState({ queryResults: [] })
         }
     }
 
     render() {
-        const { onUpdateShelf } = this.props
+        const { books,
+                onUpdateShelf } = this.props
         const { queryResults } = this.state
 
         return (
@@ -60,7 +68,7 @@ class Search extends React.Component {
                     </div>
                 </div>
                 <div className="search-books-results">
-                    <h3 class="search-results">Your search has {queryResults.length} results</h3>
+                    <h3 className="search-results">Your search has {queryResults.length} results</h3>
                     <ol className="books-grid">
                     {queryResults.map((book) => (
                         <li key={book.id}>

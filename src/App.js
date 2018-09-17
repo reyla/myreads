@@ -21,6 +21,7 @@ class BooksApp extends React.Component {
 
   /* update book shelf when user selects different shelf */
   updateShelf(book, value) {
+    // pull the desired shelf from the value user selected
     let shelf = value.target.value
     // update the book shelf in the api
     BooksAPI.update(book, shelf).then((book) => {
@@ -37,6 +38,7 @@ class BooksApp extends React.Component {
       <div className="app">
         <Route path="/search" render={({ history }) => (
           <Search
+            books={this.state.books}
             onUpdateShelf={(book, shelf) => {
               this.updateShelf(book,shelf)
               // force user back to bookshelves view
