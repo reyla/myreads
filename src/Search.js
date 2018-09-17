@@ -44,8 +44,7 @@ class Search extends React.Component {
     }
 
     render() {
-        const { books,
-                onUpdateShelf } = this.props
+        const { onUpdateShelf } = this.props
         const { queryResults } = this.state
 
         return (
