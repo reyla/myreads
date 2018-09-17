@@ -1,7 +1,8 @@
 import React from 'react'
-import { Route } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 import Shelves from './Shelves'
 import Search from './Search'
+import ErrorPage from './ErrorPage'
 import * as BooksAPI from './BooksAPI'
 import './App.css'
 import sortBy from 'sort-by'
@@ -36,7 +37,8 @@ class BooksApp extends React.Component {
   render() {
     return (
       <div className="app">
-        <Route path="/search" render={({ history }) => (
+        <Switch>
+          <Route path="/search" render={({ history }) => (
           <Search
             books={this.state.books}
             onUpdateShelf={(book, shelf) => {
@@ -69,6 +71,8 @@ class BooksApp extends React.Component {
             </div>
           </div>
         )}/>
+        <Route component={ErrorPage}/>
+        </Switch>
       </div>
     )
   }
