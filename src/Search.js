@@ -31,6 +31,7 @@ class Search extends React.Component {
                             // set default shelf to none
                             result.shelf = 'none'
                         }
+                        return result
                     })
                     results.sort(sortBy('title'));
                     // fill array with results from search
