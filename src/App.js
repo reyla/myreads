@@ -38,7 +38,7 @@ class BooksApp extends React.Component {
     return (
       <div className="app">
         <Switch>
-          <Route path="/search" render={({ history }) => (
+          <Route path={process.env.PUBLIC_URL + '/search'} render={({ history }) => (
           <Search
             books={this.state.books}
             onUpdateShelf={(book, shelf) => {
@@ -48,7 +48,7 @@ class BooksApp extends React.Component {
             }}
           />
         )}/>
-        <Route exact path="/" render={() => (
+        <Route exact path={process.env.PUBLIC_URL + '/'} render={() => (
           <div className="list-books">
             <div className="list-books-title">
                 <h1>MyReads</h1>
