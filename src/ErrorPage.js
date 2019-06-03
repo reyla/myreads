@@ -8,7 +8,7 @@ class ErrorPage extends React.Component {
         return (              
         <div id="error-page">
             <p className="error-message">I'm sorry, this page does not exist.</p>
-            <Link to="/">Return to MYREADS</Link>
+            <Link to={process.env.PUBLIC_URL + '/'}>Return to MYREADS</Link>
         </div>
         )
     }

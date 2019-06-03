@@ -44,7 +44,7 @@ class BooksApp extends React.Component {
             onUpdateShelf={(book, shelf) => {
               this.updateShelf(book,shelf)
               // force user back to bookshelves view
-              history.push('/')
+              history.push{process.env.PUBLIC_URL + '/'}
             }}
           />
         )}/>
