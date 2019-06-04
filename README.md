@@ -1,8 +1,10 @@
 # Project Overview
 
-This app allows users to track books they are reading, have already read, and want to read. The user can search a limited API to select books to add to their bookshelf. Books can be moved between shelves as desired.
+This app allows users to track books they are reading, have already read, and want to read. The user can search a limited API to select books to add to their bookshelf. Books can be moved between shelves or removed.
 
 ## How To Run
+
+View demo version (production build) at https://reyla.github.io/myreads/
 
 You can clone this project using https://github.com/reyla/myreads.git
 
